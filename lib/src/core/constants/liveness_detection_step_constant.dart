@@ -1,4 +1,4 @@
-import 'package:flutter_liveness_detection_randomized_plugin/index.dart';
+import 'package:flutter_liveness_detection/index.dart';
 
 List<LivenessDetectionStepItem> stepLiveness = [
   LivenessDetectionStepItem(

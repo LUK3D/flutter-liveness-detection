@@ -3,7 +3,7 @@ import UIKit
 import XCTest
 
 
-@testable import flutter_liveness_detection_randomized_plugin
+@testable import flutter_liveness_detection
 
 // This demonstrates a simple unit test of the Swift portion of this plugin's implementation.
 //
@@ -12,7 +12,7 @@ import XCTest
 class RunnerTests: XCTestCase {
 
   func testGetPlatformVersion() {
-    let plugin = FlutterLivenessDetectionRandomizedPlugin()
+    let plugin = FlutterLivenessDetectionPlugin()
 
     let call = FlutterMethodCall(methodName: "getPlatformVersion", arguments: [])
 

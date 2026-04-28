@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_liveness_detection_randomized_plugin/index.dart';
-import 'package:flutter_liveness_detection_randomized_plugin/src/presentation/widgets/circular_progress_widget/circular_progress_widget.dart';
+import 'package:flutter_liveness_detection/index.dart';
+import 'package:flutter_liveness_detection/src/presentation/widgets/circular_progress_widget/circular_progress_widget.dart';
 import 'package:lottie/lottie.dart';
 
 class LivenessDetectionStepOverlayWidget extends StatefulWidget {
@@ -287,8 +287,8 @@ class LivenessDetectionStepOverlayWidgetState
           child: widget.isDarkMode
               ? LottieBuilder.asset(
                   widget.isFaceDetected
-                      ? 'packages/flutter_liveness_detection_randomized_plugin/src/core/assets/face-detected.json'
-                      : 'packages/flutter_liveness_detection_randomized_plugin/src/core/assets/face-id-anim.json',
+                      ? 'packages/flutter_liveness_detection/src/core/assets/face-detected.json'
+                      : 'packages/flutter_liveness_detection/src/core/assets/face-id-anim.json',
                   height: widget.isFaceDetected ? 32 : 22,
                   width: widget.isFaceDetected ? 32 : 22,
                 )
@@ -298,8 +298,8 @@ class LivenessDetectionStepOverlayWidgetState
                       BlendMode.modulate),
                   child: LottieBuilder.asset(
                     widget.isFaceDetected
-                        ? 'packages/flutter_liveness_detection_randomized_plugin/src/core/assets/face-detected.json'
-                        : 'packages/flutter_liveness_detection_randomized_plugin/src/core/assets/face-id-anim.json',
+                        ? 'packages/flutter_liveness_detection/src/core/assets/face-detected.json'
+                        : 'packages/flutter_liveness_detection/src/core/assets/face-id-anim.json',
                     height: widget.isFaceDetected ? 32 : 22,
                     width: widget.isFaceDetected ? 32 : 22,
                   )),

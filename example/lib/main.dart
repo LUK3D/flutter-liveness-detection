@@ -1,4 +1,4 @@
-import 'package:flutter_liveness_detection_randomized_plugin/index.dart';
+import 'package:flutter_liveness_detection/index.dart';
 
 void main() {
   runApp(
@@ -67,7 +67,7 @@ class _HomeViewState extends State<HomeView> {
               onPressed: () async {
                 final config = _getTestConfig();
                 final String? response =
-                    await FlutterLivenessDetectionRandomizedPlugin.instance
+                    await FlutterLivenessDetection.instance
                         .livenessDetection(context: context, config: config);
                 if (mounted) {
                   setState(() {

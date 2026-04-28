@@ -1,4 +1,4 @@
-group = "com.bagussubagja.flutter_liveness_detection_randomized_plugin.flutter_liveness_detection_randomized_plugin"
+group = "com.bagussubagja.flutter_liveness_detection"
 version = "1.2.1"
 
 buildscript {
@@ -26,7 +26,7 @@ apply plugin: "kotlin-android"
 
 android {
     if (project.android.hasProperty("namespace")) {
-        namespace = "com.bagussubagja.flutter_liveness_detection_randomized_plugin.flutter_liveness_detection_randomized_plugin"
+        namespace = "com.bagussubagja.flutter_liveness_detection"
     }
 
     compileSdk = 36

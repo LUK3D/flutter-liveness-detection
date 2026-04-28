@@ -1,6 +1,6 @@
-# flutter_liveness_detection_randomized_plugin_example
+# flutter_liveness_detection_example
 
-Demonstrates how to use the flutter_liveness_detection_randomized_plugin plugin.
+Demonstrates how to use the flutter_liveness_detection plugin.
 
 ## Getting Started
 

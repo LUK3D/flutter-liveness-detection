@@ -1,8 +1,8 @@
-name: flutter_liveness_detection_randomized_plugin
+name: flutter_liveness_detection
 description: "A Flutter plugin for liveness detection with randomized challenge response method"
 version: 1.2.1
-homepage: "https://bagussubagja.github.io"
-repository: "https://github.com/bagussubagja/flutter-liveness-detection-randomized-plugin"
+homepage: "https://github.com/luk3d/flutter-liveness-detection-plugin"
+repository: "https://github.com/luk3d/flutter-liveness-detection-plugin"
 
 environment:
   sdk: '>=3.10.0 <4.0.0'
@@ -17,7 +17,7 @@ dependencies:
   equatable: ^2.0.5
   image: ^4.0.15
   path_provider: ^2.1.3
-  lottie: ^2.4.0
+  lottie: ^3.3.1
   collection: ^1.18.0
   screen_brightness: ^2.1.2
   shared_preferences: ^2.2.2
@@ -34,11 +34,11 @@ flutter:
   plugin:
     platforms:
       android:
-        package: com.bagussubagja.flutter_liveness_detection_randomized_plugin.flutter_liveness_detection_randomized_plugin
-        pluginClass: FlutterLivenessDetectionRandomizedPlugin
+        package: com.bagussubagja.flutter_liveness_detection
+        pluginClass: FlutterLivenessDetectionPlugin
       ios:
-        pluginClass: FlutterLivenessDetectionRandomizedPlugin
+        pluginClass: FlutterLivenessDetectionPlugin
 
   assets:
-    - packages/flutter_liveness_detection_randomized_plugin/src/core/assets/face-id-anim.json
-    - packages/flutter_liveness_detection_randomized_plugin/src/core/assets/face-detected.json
+    - packages/flutter_liveness_detection/src/core/assets/face-id-anim.json
+    - packages/flutter_liveness_detection/src/core/assets/face-detected.json

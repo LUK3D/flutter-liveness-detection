@@ -2,7 +2,7 @@
 
 // ignore_for_file: unused_local_variable
 
-import 'package:flutter_liveness_detection_randomized_plugin/index.dart';
+import 'package:flutter_liveness_detection/index.dart';
 
 void exampleUsage() {
   // ✅ CORRECT: Skip blink and lookDown, use custom labels for others

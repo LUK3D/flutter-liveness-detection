@@ -1,9 +1,11 @@
-import 'package:flutter_liveness_detection_randomized_plugin/index.dart';
+import 'package:flutter_liveness_detection/index.dart';
 
-class FlutterLivenessDetectionRandomizedPlugin {
-  FlutterLivenessDetectionRandomizedPlugin._privateConstructor();
-  static final FlutterLivenessDetectionRandomizedPlugin instance =
-      FlutterLivenessDetectionRandomizedPlugin._privateConstructor();
+class FlutterLivenessDetection {
+  FlutterLivenessDetection._privateConstructor();
+
+  static final FlutterLivenessDetection instance =
+      FlutterLivenessDetection._privateConstructor();
+
   final List<LivenessDetectionThreshold> _thresholds = [];
 
   List<LivenessDetectionThreshold> get thresholdConfig {
@@ -19,7 +21,8 @@ class FlutterLivenessDetectionRandomizedPlugin {
         maxFailedAttempts: config.maxFailedAttempts,
         cooldownMinutes: config.cooldownMinutes,
       );
-      final cooldownState = await LivenessCooldownService.instance.getCooldownState();
+      final cooldownState =
+          await LivenessCooldownService.instance.getCooldownState();
       if (cooldownState.isInCooldown && context.mounted) {
         await Navigator.of(context).push(
           MaterialPageRoute(
@@ -35,7 +38,7 @@ class FlutterLivenessDetectionRandomizedPlugin {
     }
 
     if (!context.mounted) return null;
-    
+
     final String? capturedFacePath = await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) => LivenessDetectionView(
@@ -56,7 +59,6 @@ class FlutterLivenessDetectionRandomizedPlugin {
   }
 
   Future<String?> getPlatformVersion() {
-    return FlutterLivenessDetectionRandomizedPluginPlatform.instance
-        .getPlatformVersion();
+    return FlutterLivenessDetectionPlatform.instance.getPlatformVersion();
   }
 }

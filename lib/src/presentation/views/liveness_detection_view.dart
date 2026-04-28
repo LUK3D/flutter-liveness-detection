@@ -1,6 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
-import 'package:flutter_liveness_detection_randomized_plugin/index.dart';
-import 'package:flutter_liveness_detection_randomized_plugin/src/core/constants/liveness_detection_step_constant.dart';
+import 'package:flutter_liveness_detection/index.dart';
+import 'package:flutter_liveness_detection/src/core/constants/liveness_detection_step_constant.dart';
 import 'package:collection/collection.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:image/image.dart' as img;
@@ -565,7 +565,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     required LivenessDetectionStep step,
   }) async {
     final blinkThreshold =
-        FlutterLivenessDetectionRandomizedPlugin.instance.thresholdConfig
+        FlutterLivenessDetection.instance.thresholdConfig
                 .firstWhereOrNull((p0) => p0 is LivenessThresholdBlink)
             as LivenessThresholdBlink?;
 
@@ -584,7 +584,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
   }) async {
     if (Platform.isAndroid) {
       final headTurnThreshold =
-          FlutterLivenessDetectionRandomizedPlugin.instance.thresholdConfig
+            FlutterLivenessDetection.instance.thresholdConfig
                   .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
               as LivenessThresholdHead?;
       if ((face.headEulerAngleY ?? 0) <
@@ -594,7 +594,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       }
     } else if (Platform.isIOS) {
       final headTurnThreshold =
-          FlutterLivenessDetectionRandomizedPlugin.instance.thresholdConfig
+            FlutterLivenessDetection.instance.thresholdConfig
                   .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
               as LivenessThresholdHead?;
       if ((face.headEulerAngleY ?? 0) >
@@ -611,7 +611,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
   }) async {
     if (Platform.isAndroid) {
       final headTurnThreshold =
-          FlutterLivenessDetectionRandomizedPlugin.instance.thresholdConfig
+            FlutterLivenessDetection.instance.thresholdConfig
                   .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
               as LivenessThresholdHead?;
       if ((face.headEulerAngleY ?? 0) >
@@ -621,7 +621,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
       }
     } else if (Platform.isIOS) {
       final headTurnThreshold =
-          FlutterLivenessDetectionRandomizedPlugin.instance.thresholdConfig
+            FlutterLivenessDetection.instance.thresholdConfig
                   .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
               as LivenessThresholdHead?;
       if ((face.headEulerAngleY ?? 0) <
@@ -637,7 +637,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     required LivenessDetectionStep step,
   }) async {
     final headTurnThreshold =
-        FlutterLivenessDetectionRandomizedPlugin.instance.thresholdConfig
+        FlutterLivenessDetection.instance.thresholdConfig
                 .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
             as LivenessThresholdHead?;
     if ((face.headEulerAngleX ?? 0) >
@@ -652,7 +652,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     required LivenessDetectionStep step,
   }) async {
     final headTurnThreshold =
-        FlutterLivenessDetectionRandomizedPlugin.instance.thresholdConfig
+        FlutterLivenessDetection.instance.thresholdConfig
                 .firstWhereOrNull((p0) => p0 is LivenessThresholdHead)
             as LivenessThresholdHead?;
     if ((face.headEulerAngleX ?? 0) <
@@ -667,7 +667,7 @@ class _LivenessDetectionScreenState extends State<LivenessDetectionView> {
     required LivenessDetectionStep step,
   }) async {
     final smileThreshold =
-        FlutterLivenessDetectionRandomizedPlugin.instance.thresholdConfig
+        FlutterLivenessDetection.instance.thresholdConfig
                 .firstWhereOrNull((p0) => p0 is LivenessThresholdSmile)
             as LivenessThresholdSmile?;
 

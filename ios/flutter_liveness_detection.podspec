@@ -1,9 +1,9 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint flutter_liveness_detection_randomized_plugin.podspec` to validate before publishing.
+# Run `pod lib lint flutter_liveness_detection.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'flutter_liveness_detection_randomized_plugin'
+  s.name             = 'flutter_liveness_detection'
   s.version          = '0.0.1'
   s.summary          = 'A Flutter plugin for liveness detection with randomized challenge response method'
   s.description      = <<-DESC
@@ -25,5 +25,5 @@ A Flutter plugin for liveness detection with randomized challenge response metho
   # required reason APIs, update the PrivacyInfo.xcprivacy file to describe your
   # plugin's privacy impact, and then uncomment this line. For more information,
   # see https://developer.apple.com/documentation/bundleresources/privacy_manifest_files
-  # s.resource_bundles = {'flutter_liveness_detection_randomized_plugin_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
+  # s.resource_bundles = {'flutter_liveness_detection_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
 end
