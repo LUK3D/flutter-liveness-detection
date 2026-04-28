@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_liveness_detection/src/models/liveness_detection_cooldown.dart';
+import 'package:flutter_liveness_detection/src/models/liveness_detection_ui_config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LivenessCooldownWidget extends StatefulWidget {
@@ -8,6 +10,7 @@ class LivenessCooldownWidget extends StatefulWidget {
   final bool isDarkMode;
   final VoidCallback? onCooldownComplete;
   final int maxFailedAttempts;
+  final LivenessDetectionUiConfig? uiConfig;
 
   const LivenessCooldownWidget({
     super.key,
@@ -15,13 +18,15 @@ class LivenessCooldownWidget extends StatefulWidget {
     this.isDarkMode = true,
     this.onCooldownComplete,
     this.maxFailedAttempts = 3,
+    this.uiConfig,
   });
 
   @override
   State<LivenessCooldownWidget> createState() => _LivenessCooldownWidgetState();
 }
 
-class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with WidgetsBindingObserver {
+class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget>
+    with WidgetsBindingObserver {
   Timer? _countdownTimer;
   Duration _remainingTime = Duration.zero;
   static const String _remainingTimeKey = 'cooldown_remaining_time';
@@ -42,7 +47,8 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.paused || state == AppLifecycleState.detached) {
+    if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
       _pauseCountdown();
     } else if (state == AppLifecycleState.resumed) {
       _resumeCountdown();
@@ -52,13 +58,13 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
   Future<void> _loadRemainingTime() async {
     final prefs = await SharedPreferences.getInstance();
     final savedSeconds = prefs.getInt(_remainingTimeKey);
-    
+
     if (savedSeconds != null) {
       _remainingTime = Duration(seconds: savedSeconds);
     } else {
       _remainingTime = widget.cooldownState.remainingCooldownTime;
     }
-    
+
     if (mounted) {
       setState(() {});
       _startCountdown();
@@ -81,7 +87,7 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
 
   void _startCountdown() {
     _countdownTimer?.cancel();
-    
+
     if (_remainingTime.inSeconds <= 0) {
       _clearSavedTime();
       widget.onCooldownComplete?.call();
@@ -97,7 +103,7 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
       setState(() {
         _remainingTime = _remainingTime - const Duration(seconds: 1);
       });
-      
+
       _saveRemainingTime();
 
       if (_remainingTime.inSeconds <= 0) {
@@ -121,6 +127,20 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
 
   @override
   Widget build(BuildContext context) {
+    final uiConfig = widget.uiConfig;
+    final title = uiConfig?.cooldownTitle ?? 'Too Many Failed Attempts';
+    final body =
+        uiConfig?.cooldownBodyBuilder?.call(
+          LivenessDetectionCooldownTextData(
+            maxFailedAttempts: widget.maxFailedAttempts,
+            remainingCooldownTime: _remainingTime,
+          ),
+        ) ??
+        'You have failed liveness verification ${widget.maxFailedAttempts} times.\nPlease wait before trying again.';
+    final remainingTimeLabel =
+        uiConfig?.cooldownRemainingTimeLabel ?? 'Remaining Wait Time';
+    final backButtonLabel = uiConfig?.cooldownBackButtonLabel ?? 'Back';
+
     return Scaffold(
       backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
       body: Center(
@@ -136,7 +156,7 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
               ),
               const SizedBox(height: 24),
               Text(
-                'Too Many Failed Attempts',
+                title,
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -146,7 +166,7 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
               ),
               const SizedBox(height: 16),
               Text(
-                'You have failed liveness verification ${widget.maxFailedAttempts} times.\nPlease wait before trying again.',
+                body,
                 style: TextStyle(
                   fontSize: 16,
                   color: widget.isDarkMode ? Colors.white70 : Colors.black54,
@@ -157,16 +177,20 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
               Container(
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: widget.isDarkMode ? Colors.grey[900] : Colors.grey[100],
+                  color: widget.isDarkMode
+                      ? Colors.grey[900]
+                      : Colors.grey[100],
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Column(
                   children: [
                     Text(
-                      'Remaining Wait Time',
+                      remainingTimeLabel,
                       style: TextStyle(
                         fontSize: 14,
-                        color: widget.isDarkMode ? Colors.white70 : Colors.black54,
+                        color: widget.isDarkMode
+                            ? Colors.white70
+                            : Colors.black54,
                       ),
                     ),
                     const SizedBox(height: 8),
@@ -186,11 +210,18 @@ class _LivenessCooldownWidgetState extends State<LivenessCooldownWidget> with Wi
               ElevatedButton(
                 onPressed: () => Navigator.of(context).pop(),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: widget.isDarkMode ? Colors.grey[800] : Colors.grey[300],
-                  foregroundColor: widget.isDarkMode ? Colors.white : Colors.black,
-                  padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+                  backgroundColor: widget.isDarkMode
+                      ? Colors.grey[800]
+                      : Colors.grey[300],
+                  foregroundColor: widget.isDarkMode
+                      ? Colors.white
+                      : Colors.black,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 32,
+                    vertical: 12,
+                  ),
                 ),
-                child: const Text('Back'),
+                child: Text(backButtonLabel),
               ),
             ],
           ),

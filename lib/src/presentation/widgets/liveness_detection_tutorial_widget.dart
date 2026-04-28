@@ -4,11 +4,14 @@ class LivenessDetectionTutorialScreen extends StatefulWidget {
   final VoidCallback onStartTap;
   final bool isDarkMode;
   final int? duration;
-  const LivenessDetectionTutorialScreen(
-      {super.key,
-      required this.onStartTap,
-      this.isDarkMode = false,
-      required this.duration});
+  final LivenessDetectionUiConfig? uiConfig;
+  const LivenessDetectionTutorialScreen({
+    super.key,
+    required this.onStartTap,
+    this.isDarkMode = false,
+    this.uiConfig,
+    required this.duration,
+  });
 
   @override
   State<LivenessDetectionTutorialScreen> createState() =>
@@ -24,8 +27,60 @@ class _LivenessDetectionTutorialScreenState
 
   @override
   Widget build(BuildContext context) {
+    final uiConfig = widget.uiConfig;
+    final backgroundColor =
+        uiConfig?.backgroundColor ??
+        (widget.isDarkMode ? Colors.black : Colors.white);
+    final surfaceColor =
+        uiConfig?.surfaceColor ??
+        (widget.isDarkMode ? Colors.black87 : Colors.white);
+    final onSurfaceColor =
+        uiConfig?.onSurfaceColor ??
+        (widget.isDarkMode ? Colors.white : Colors.black);
+    final primaryColor = uiConfig?.primaryColor ?? onSurfaceColor;
+    final onPrimaryColor = uiConfig?.onPrimaryColor ?? onSurfaceColor;
+    final shadowColor = uiConfig?.shadowColor ?? Colors.grey;
+    final titleStyle =
+        uiConfig?.tutorialTitleTextStyle ??
+        TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 24,
+          color: onSurfaceColor,
+        );
+    final stepTitleStyle =
+        uiConfig?.tutorialStepTitleTextStyle ??
+        TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: onSurfaceColor,
+        );
+    final stepBodyStyle =
+        uiConfig?.tutorialStepBodyTextStyle ?? TextStyle(color: onSurfaceColor);
+    final footerStyle =
+        uiConfig?.tutorialFooterTextStyle ??
+        const TextStyle(color: Colors.grey);
+    final instructions =
+        uiConfig?.tutorialInstructions ??
+        [
+          const LivenessDetectionTutorialInstruction(
+            title: 'Sufficient Lighting',
+            description:
+                'Make sure you are in an area that has sufficient lighting and that your ears are not covered by anything',
+          ),
+          const LivenessDetectionTutorialInstruction(
+            title: 'Straight Ahead View',
+            description:
+                'Hold the phone at eye level and look straight at the camera',
+          ),
+          LivenessDetectionTutorialInstruction(
+            title: 'Time Limit Verification',
+            description:
+                'The time limit given for the liveness detection system verification process is ${widget.duration ?? 45} seconds',
+          ),
+        ];
+
     return Scaffold(
-      backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
+      backgroundColor: backgroundColor,
       body: SafeArea(
         minimum: const EdgeInsets.all(12),
         child: Column(
@@ -33,30 +88,22 @@ class _LivenessDetectionTutorialScreenState
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Spacer(),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
             Text(
-              'Liveness Detection - Tutorial',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-                color: widget.isDarkMode ? Colors.white : Colors.black,
-              ),
+              uiConfig?.tutorialTitle ?? 'Liveness Detection - Tutorial',
+              style: titleStyle,
             ),
-            const SizedBox(
-              height: 32,
-            ),
+            const SizedBox(height: 32),
             Container(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.symmetric(vertical: 16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: widget.isDarkMode ? Colors.black87 : Colors.white,
+                color: surfaceColor,
                 boxShadow: !widget.isDarkMode
                     ? [
                         BoxShadow(
-                          color: Colors.grey.withAlpha(51),
+                          color: shadowColor.withAlpha(51),
                           spreadRadius: 5,
                           blurRadius: 7,
                           offset: const Offset(0, 3),
@@ -66,121 +113,57 @@ class _LivenessDetectionTutorialScreenState
               ),
               child: Column(
                 children: [
-                  ListTile(
-                    leading: Text(
-                      '1',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
+                  for (var index = 0; index < instructions.length; index++)
+                    ListTile(
+                      leading: Text('${index + 1}', style: stepTitleStyle),
+                      subtitle: Text(
+                        instructions[index].description,
+                        style: stepBodyStyle,
+                      ),
+                      title: Text(
+                        instructions[index].title,
+                        style: stepTitleStyle,
+                      ),
                     ),
-                    subtitle: Text(
-                      "Make sure you are in an area that has sufficient lighting and that your ears are not covered by anything",
-                      style: TextStyle(
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
-                    ),
-                    title: Text(
-                      "Sufficient Lighting",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
-                    ),
-                  ),
-                  ListTile(
-                    leading: Text(
-                      '2',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
-                    ),
-                    subtitle: Text(
-                      "Hold the phone at eye level and look straight at the camera",
-                      style: TextStyle(
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
-                    ),
-                    title: Text(
-                      "Straight Ahead View",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
-                    ),
-                  ),
-                  ListTile(
-                    leading: Text(
-                      '3',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
-                    ),
-                    subtitle: Text(
-                      "The time limit given for the liveness detection system verification process is ${widget.duration ?? 45} seconds",
-                      style: TextStyle(
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
-                    ),
-                    title: Text(
-                      "Time Limit Verification",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color:
-                              widget.isDarkMode ? Colors.white : Colors.black),
-                    ),
-                  )
                 ],
               ),
             ),
-            const SizedBox(
-              height: 24,
-            ),
+            const SizedBox(height: 24),
             ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    widget.isDarkMode ? Colors.black87 : Colors.white,
-                foregroundColor:
-                    widget.isDarkMode ? Colors.white : Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
+              style:
+                  uiConfig?.startButtonStyle ??
+                  ElevatedButton.styleFrom(
+                    backgroundColor: primaryColor,
+                    foregroundColor: onPrimaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
               icon: const Icon(Icons.camera_alt_outlined),
               onPressed: () => widget.onStartTap(),
-              label: const Text(
-                "Start the Liveness Detection System",
+              label: Text(
+                uiConfig?.tutorialStartButtonLabel ??
+                    'Start the Liveness Detection System',
               ),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             const Spacer(),
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(
-                  Icons.info_outline_rounded,
-                  color: Colors.grey,
-                  size: 15,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'Package Version: 1.2.1',
-                  style: TextStyle(color: Colors.grey),
-                )
-              ],
-            )
+            if (uiConfig?.showPackageVersion ?? true)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(
+                    Icons.info_outline_rounded,
+                    color: Colors.grey,
+                    size: 15,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    uiConfig?.packageVersionLabel ?? 'Package Version: 1.2.1',
+                    style: footerStyle,
+                  ),
+                ],
+              ),
           ],
         ),
       ),

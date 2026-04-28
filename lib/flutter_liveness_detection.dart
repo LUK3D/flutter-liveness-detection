@@ -21,8 +21,8 @@ class FlutterLivenessDetection {
         maxFailedAttempts: config.maxFailedAttempts,
         cooldownMinutes: config.cooldownMinutes,
       );
-      final cooldownState =
-          await LivenessCooldownService.instance.getCooldownState();
+      final cooldownState = await LivenessCooldownService.instance
+          .getCooldownState();
       if (cooldownState.isInCooldown && context.mounted) {
         await Navigator.of(context).push(
           MaterialPageRoute(
@@ -30,6 +30,7 @@ class FlutterLivenessDetection {
               cooldownState: cooldownState,
               isDarkMode: config.isDarkMode,
               maxFailedAttempts: config.maxFailedAttempts,
+              uiConfig: config.uiConfig,
             ),
           ),
         );
@@ -41,9 +42,7 @@ class FlutterLivenessDetection {
 
     final String? capturedFacePath = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => LivenessDetectionView(
-          config: config,
-        ),
+        builder: (context) => LivenessDetectionView(config: config),
       ),
     );
 

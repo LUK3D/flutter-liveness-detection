@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter_liveness_detection/src/models/liveness_detection_label_model.dart';
+import 'package:flutter_liveness_detection/src/models/liveness_detection_ui_config.dart';
 
 class LivenessDetectionConfig {
   final bool startWithInfoScreen;
@@ -17,6 +18,7 @@ class LivenessDetectionConfig {
   final bool shuffleListWithSmileLast;
   final bool showCurrentStep;
   final bool isDarkMode;
+  final LivenessDetectionUiConfig? uiConfig;
 
   LivenessDetectionConfig({
     this.startWithInfoScreen = false,
@@ -34,6 +36,7 @@ class LivenessDetectionConfig {
     this.shuffleListWithSmileLast = true,
     this.showCurrentStep = false,
     this.isDarkMode = true,
+    this.uiConfig,
   }) : assert(
          !useCustomizedLabel || customizedLabel != null,
          'customizedLabel must not be null when useCustomizedLabel is true',
